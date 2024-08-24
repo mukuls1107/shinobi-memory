@@ -1,0 +1,267 @@
+@import url('https://fonts.googleapis.com/css2?family=Ninja+Naruto&display=swap');
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Ninja Naruto', sans-serif;
+  background-color: #121212;
+  color: #FF4500;
+  overflow: hidden;
+  cursor: url('kunai.jpg'), auto;
+}
+
+.game-container {
+  width: 100%;
+  min-height: 100vh;
+  background-image: url('itachi-bg.gif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.game-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(30, 30, 30, 0.8));
+  z-index: 1;
+}
+
+.chakra-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.chakra-particle {
+  position: absolute;
+  color: rgba(255, 69, 0, 0.3);
+  font-size: 16px;
+  user-select: none;
+  pointer-events: none;
+  animation: float 20s linear infinite;
+}
+
+.game-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 15px;
+  border: 2px solid rgba(255, 69, 0, 0.3);
+  box-shadow: 0 0 20px rgba(255, 69, 0, 0.2), inset 0 0 20px rgba(255, 69, 0, 0.2);
+}
+
+.game-title {
+  font-size: 3em;
+  margin-bottom: 30px;
+  text-align: center;
+  animation: glow 2s infinite alternate;
+  background: linear-gradient(45deg, #FF4500, #FF6347, #FF7F50);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.chakra-seal {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 400px;
+  margin: 0 auto 30px;
+}
+
+.chakra-button {
+  width: 80px;
+  height: 80px;
+  margin: 10px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 69, 0, 0.7);
+  font-size: 2em;
+  background: radial-gradient(circle, rgba(255, 69, 0, 0.7), rgba(30, 30, 30, 0.7));
+  backdrop-filter: blur(10px);
+  color: #ffffff;
+  text-shadow: 1px 1px 2px #000000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.chakra-button:hover {
+  transform: scale(1.2) rotate(5deg);
+  box-shadow: 0 0 20px rgba(255, 69, 0, 0.8);
+  background: radial-gradient(circle, rgba(255, 99, 71, 0.8), rgba(30, 30, 30, 0.8));
+}
+
+.chakra-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ninja-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(30, 30, 30, 0.7));
+  border-radius: 10px;
+  padding: 15px;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+  border: 1px solid rgba(255, 69, 0, 0.3);
+}
+
+.naruto-chibi {
+  width: 100px;
+  height: 100px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform 0.5s ease;
+}
+
+.naruto-chibi.normal {
+  background-image: url('normal.png');
+}
+
+.naruto-chibi.happy {
+  background-image: url('happy.png');
+  transform: scale(1.2) rotate(-10deg);
+}
+
+.naruto-chibi.defeated {
+  background-image: url('sad.png');
+  transform: scale(0.8) rotate(10deg);
+}
+
+.ninja-rank {
+  text-align: center;
+  position: relative;
+  padding: 5px 10px;
+  overflow: hidden;
+}
+
+.ninja-rank::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #FF4500, #FF6347, #FF7F50, #FF4500);
+  z-index: -1;
+  animation: glowing 3s linear infinite;
+}
+
+.ninja-rank::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(30, 30, 30, 0.7));
+  z-index: -1;
+}
+
+.rank-progress {
+  width: 100px;
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.rank-bar {
+  height: 100%;
+  background-color: #FF4500;
+  transition: width 0.3s ease;
+}
+
+.game-over-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(30, 30, 30, 0.9));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeInOut 2s forwards;
+}
+
+.game-over-content {
+  background: rgba(255, 69, 0, 0.9);
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(255, 165, 0, 0.5);
+}
+
+.game-over-title {
+  font-size: 3em;
+  color: #FFF;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px #000;
+}
+
+.play-again-button {
+  color: white;
+  border: 1px solid white;
+  padding: 6px 6px;
+  border-radius: 6px;
+}
+
+.game-over-score {
+  font-size: 1.5em;
+  color: #FFF;
+  margin-bottom: 30px;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 2px 2px 4px #000000, 0 0 10px #FF4500, 0 0 20px #FF4500, 0 0 30px #FF4500;
+  }
+  to {
+    text-shadow: 2px 2px 4px #000000, 0 0 15px #FF6347, 0 0 25px #FF6347, 0 0 40px #FF6347;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-100vh) rotate(720deg);
+  }
+}
+
+@keyframes glowing {
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
