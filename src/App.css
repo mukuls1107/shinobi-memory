@@ -10,7 +10,6 @@ html {
   background-color: #121212;
   color: #FF4500;
   /* overflow: hidden; */
-  cursor: url('kunai.jpg'), auto;
 }
 
 .game-container {
@@ -316,7 +315,7 @@ html {
   transform: scale(0.95);
   /* Pressed effect */
   box-shadow: 0 2px 10px rgba(255, 69, 0, 0.3);
-  /* Reduced shadow when active */
+  
 }
 
 .disabled {
