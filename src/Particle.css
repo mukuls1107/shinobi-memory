@@ -1,8 +1,8 @@
 .chakra-particle {
     position: absolute;
     color: rgba(255, 69, 0, 0.7);
-    pointer-events: none; /* Prevent interactions */
-    user-select: none; /* Prevent text selection */
+    pointer-events: none; 
+    user-select: none; 
     animation: float linear;
   }
   

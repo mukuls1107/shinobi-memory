@@ -79,7 +79,7 @@ export default function NarutoMemoryGame() {
       setGameOver(true);
       setDisplayText(`Game Over! Your final score is ${idArray.length}.`);
       setNarutoMood("defeated");
-    } else if (idArray.length + 1 === chakraSymbols.length) { // Check if all symbols are matched
+    } else if (idArray.length + 1 === chakraSymbols.length) { 
       setIdArray((prevArray) => [...prevArray, id]);
       setWon(true);
       setDisplayText(`Congrats! You Win 🎉`);
