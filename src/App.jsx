@@ -1,17 +1,57 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import CreateChakraParticles from "./Particle";
+import loadData from "./Utils/getImages.js";
 
 const chakraSymbols = [
-  { name: "Fire", symbol: "🔥" },
-  { name: "Water", symbol: "💧" },
-  { name: "Earth", symbol: "🏔️" },
-  { name: "Wind", symbol: "🌪️" },
-  { name: "Lightning", symbol: "⚡" },
-  { name: "Wood", symbol: "🌳" },
-  { name: "Lava", symbol: "🌋" },
-  { name: "Ice", symbol: "❄️" },
-  { name: "Storm", symbol: "🌩️" },
-  { name: "Boil", symbol: "♨️" },
+  {
+    name: "Naruto",
+    symbol:
+      "https://static.wikia.nocookie.net/naruto/images/7/7d/Naruto_Part_II.png",
+  },
+  {
+    name: "Sasuke",
+    symbol:
+      "https://static.wikia.nocookie.net/naruto/images/1/13/Sasuke_Part_2.png",
+  },
+  {
+    name: "Madara",
+    symbol: "https://static.wikia.nocookie.net/naruto/images/f/fd/Madara.png",
+  },
+  {
+    name: "Kakashi",
+    symbol:
+      "https://static.wikia.nocookie.net/naruto/images/2/25/Kakashi_Part_III.png",
+  },
+  {
+    name: "Orochimaru",
+    symbol:
+      "https://static.wikia.nocookie.net/naruto/images/b/be/Orochimaru_Part_III.png",
+  },
+  {
+    name: "Obito",
+    symbol: "https://static.wikia.nocookie.net/naruto/images/3/3c/Obito.png",
+  },
+  {
+    name: "Gaara",
+    symbol:
+      "https://static.wikia.nocookie.net/naruto/images/0/0f/Gaara_Part_II.png",
+  },
+  {
+    name: "Kabuto",
+    symbol:
+      "https://static.wikia.nocookie.net/naruto/images/0/0b/Kabuto_Part_II.png",
+  },
+  {
+    name: "Konohamaru",
+    symbol:
+      "https://static.wikia.nocookie.net/naruto/images/3/37/Konohamaru_Sarutobi.png",
+  },
+  {
+    name: "Might Guy",
+    symbol:
+      "https://static.wikia.nocookie.net/naruto/images/b/b3/Might_Guy_Part_III.png",
+  },
 ];
 
 const ninjaRanks = ["Genin", "Chunin", "Jonin", "ANBU", "Kage"];
@@ -23,35 +63,14 @@ export default function NarutoMemoryGame() {
   const [score, setScore] = useState(0);
   const [ninjaRank, setNinjaRank] = useState(ninjaRanks[0]);
   const [narutoMood, setNarutoMood] = useState("normal");
-  const [won, setWon] = useState(false); // New state to track if the user has won
+  const [won, setWon] = useState(false);
+  const [chakraPositions, setChakraPositions] = useState([
+    ...Array(chakraSymbols.length).keys(),
+  ]);
 
   useEffect(() => {
     updateNinjaRank();
   }, [score]);
-
-
-  function createChakraParticles() {
-    const container = document.createElement("div");
-    container.className = "chakra-particles";
-    document.body.appendChild(container);
-
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const numParticles = 50;
-
-    for (let i = 0; i < numParticles; i++) {
-      const particle = document.createElement("span");
-      particle.className = "chakra-particle";
-      particle.textContent =
-        letters[Math.floor(Math.random() * letters.length)];
-      particle.style.left = `${Math.random() * 100}%`;
-      particle.style.top = `${Math.random() * 100}%`;
-      particle.style.animationDuration = `${15 + Math.random() * 15}s`;
-      particle.style.animationDelay = `${-Math.random() * 20}s`;
-      container.appendChild(particle);
-    }
-  }
-
-
 
   function addInArray(id) {
     if (gameOver || won) return;
@@ -61,7 +80,6 @@ export default function NarutoMemoryGame() {
       setDisplayText(`Game Over! Your final score is ${idArray.length}.`);
       setNarutoMood("defeated");
     } else if (idArray.length === chakraSymbols.length - 1) {
-      // User clicked all the symbols correctly
       setIdArray((prevArray) => [...prevArray, id]);
       setWon(true);
       setDisplayText(`Congrats! You Win 🎉`);
@@ -70,7 +88,13 @@ export default function NarutoMemoryGame() {
       setIdArray((prevArray) => [...prevArray, id]);
       setScore(idArray.length + 1);
       setNarutoMood("happy");
+      shufflePositions();
     }
+  }
+
+  function shufflePositions() {
+    const shuffled = [...chakraPositions].sort(() => Math.random() - 0.5);
+    setChakraPositions(shuffled);
   }
 
   function displayAll() {
@@ -88,42 +112,38 @@ export default function NarutoMemoryGame() {
   }
 
   function resetGame() {
+    window.location.reload();
     setIdArray([]);
     setDisplayText("");
     setGameOver(false);
-    setWon(false); // Reset the win state
+    setWon(false);
     setScore(0);
     setNarutoMood("normal");
   }
 
-
   return (
-    <div className="game-container" onLoad={createChakraParticles()}>
+    <div className="game-container" onLoad={loadData("characters")}>
+      <CreateChakraParticles />
       <div className="game-content">
         <h1 className="game-title">Shinobi Memory Challenge</h1>
 
         <div className="chakra-seal">
-          {chakraSymbols.map((chakra, index) => (
+          {chakraPositions.map((pos, index) => (
             <button
               key={index}
               className={`chakra-button ${gameOver || won ? "disabled" : ""}`}
-              onClick={() => addInArray(index + 1)}
+              onClick={() => addInArray(pos + 1)}
               disabled={gameOver || won}
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
-              {chakra.symbol}
+              <img
+                src={chakraSymbols[pos].symbol}
+                alt={chakraSymbols[pos].name}
+                className="chakra-image"
+              />
             </button>
           ))}
         </div>
-        {/* 
-        <div className="game-controls">
-          <button className="jutsu-button" onClick={displayAll} disabled={gameOver || won}>
-            Reveal Jutsu
-          </button>
-        </div> */}
-
-        {/* <div className="scroll-message">
-          <p>{displayText}</p>
-        </div> */}
 
         <div className="ninja-info">
           <div className={`naruto-chibi ${narutoMood}`}></div>
