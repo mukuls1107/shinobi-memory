@@ -74,12 +74,12 @@ export default function NarutoMemoryGame() {
 
   function addInArray(id) {
     if (gameOver || won) return;
-
+  
     if (idArray.includes(id)) {
       setGameOver(true);
       setDisplayText(`Game Over! Your final score is ${idArray.length}.`);
       setNarutoMood("defeated");
-    } else if (idArray.length === chakraSymbols.length - 1) {
+    } else if (idArray.length + 1 === chakraSymbols.length) { // Check if all symbols are matched
       setIdArray((prevArray) => [...prevArray, id]);
       setWon(true);
       setDisplayText(`Congrats! You Win 🎉`);
@@ -110,15 +110,14 @@ export default function NarutoMemoryGame() {
       ninjaRanks[Math.min(Math.floor(score / 3), ninjaRanks.length - 1)]
     );
   }
-
   function resetGame() {
-    window.location.reload();
     setIdArray([]);
     setDisplayText("");
     setGameOver(false);
     setWon(false);
     setScore(0);
     setNarutoMood("normal");
+    shufflePositions(); // Reset the positions as well
   }
 
   return (
@@ -162,6 +161,9 @@ export default function NarutoMemoryGame() {
       {(gameOver || won) && (
         <div className="game-over-overlay">
           <div className="game-over-content">
+            <div
+              className={`chibi-animation ${won ? "won" : "lost"}`}
+            ></div>
             <h2 className="game-over-title">
               {won ? "You Win!" : "Game Over!"}
             </h2>

@@ -209,14 +209,12 @@ html {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.9);
-
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 10;
-  animation: fadeIn 0.5s ease-in-out;
-
+  overflow: hidden;
 }
 
 @keyframes fadeIn {
@@ -232,7 +230,7 @@ html {
 .game-over-content {
   text-align: center;
   background: linear-gradient(145deg, rgba(255, 69, 0, 0.9), rgba(255, 140, 0, 0.8));
-  
+
   padding: 30px;
 
   border-radius: 15px;
@@ -259,14 +257,14 @@ html {
 
 .game-over-title {
   font-size: 3em;
-  
+
   margin-bottom: 20px;
- 
+
   color: #121212;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 
   animation: glow 1.5s infinite alternate;
-  
+
 }
 
 @keyframes glow {
@@ -286,20 +284,20 @@ html {
 
   color: #121212;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
- 
+
 }
 
 .play-again-button {
   font-size: 1.5em;
 
   padding: 15px 30px;
-  
+
   background: linear-gradient(45deg, #FF4500, #FF6347);
- 
+
   color: #121212;
   border: none;
   border-radius: 25px;
- 
+
   cursor: pointer;
   transition: background 0.3s, transform 0.2s;
 
@@ -311,7 +309,7 @@ html {
   background: linear-gradient(45deg, #FF6347, #FF4500);
 
   transform: scale(1.05);
-  
+
 }
 
 .play-again-button:active {
@@ -324,4 +322,51 @@ html {
 .disabled {
   pointer-events: none;
   opacity: 0.5;
+}
+
+.chibi-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 11;
+  width: 120px;
+  height: 120px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.chibi-animation.won {
+  position: absolute;
+  top: 30%;
+  left: 55%;
+  background-image: url('happy.png');
+  animation: scale-bounce 0.8s ease-in-out infinite alternate;
+}
+
+.chibi-animation.lost {
+  background-image: url('sad.png');
+  position: absolute;
+  top: 25%;
+  animation: scale-shrink 2s ease-in-out infinite;
+}
+
+@keyframes scale-bounce {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+@keyframes scale-shrink {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(0);
+  }
 }
